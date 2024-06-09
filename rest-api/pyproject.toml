@@ -19,6 +19,7 @@ maintainers = [
 
 dependencies = [
   "annotated-types==0.7.0",
+  "argon2-cffi==23.1.0",
   "email_validator==2.1.1",
   "environs==1.0.0",
   "fastapi==0.111.0",

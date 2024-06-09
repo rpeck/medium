@@ -22,7 +22,9 @@ def create_test_user(t: Type[UserT]) -> UserT:
     user.first_name = choice(firstnames)
     user.last_name = choice(lastnames)
     user.email = f"{user.first_name}.{user.last_name}-{num}@somewhere.com"
-    user.hashed_password = secrets.token_urlsafe(8)
+
+    if hasattr(user, "password"):
+        user.password = secrets.token_urlsafe(8)
     return user
 
 class TestUsersCRUD(EndpointTestFixtures):
@@ -45,7 +47,7 @@ class TestUsersCRUD(EndpointTestFixtures):
 
         # test Create (POST):
         test_user_1: UserCreate = create_test_user(UserCreate)
-        assert test_user_1.hashed_password is not None
+        assert test_user_1.password is not None
 
         response = await http_client.post("/v1/users", json=test_user_1.dict())
         assert response.status_code == 200

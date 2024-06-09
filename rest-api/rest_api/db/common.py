@@ -58,6 +58,7 @@ def create_session() -> Session:
 
 def create_tables_if_missing() -> None:
     from rest_api.entities.users import test_user_1
+    from rest_api.entities.companies import test_company_1
 
     logger.info(f"Creating tables in {_engine}...")
     SQLModel.metadata.create_all(_engine, checkfirst=True)
@@ -65,4 +66,5 @@ def create_tables_if_missing() -> None:
     with create_session() as session:
         logger.info("Adding test records to db...")
         session.add(test_user_1)
+        session.add(test_company_1)
         session.commit()
