@@ -1,0 +1,7 @@
+{
+    "summary": "Error case: CompanyCreate with name field missing.",
+    "description": "The `name` field is required, so this will fail Pydantic validation.",
+    "value": {
+    }
+}
+

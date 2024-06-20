@@ -1,0 +1,34 @@
+classDiagram
+    BaseSearchModel --|> EntitySearchModel
+    BaseSearchModel --|> OperatorSearchModel
+    BaseSearchModel: type
+    BaseSearchModel: discriminator()
+    BaseSearchModel: render_condition()
+    BaseSearchModel -- Config
+    Config: extra
+    Config: validate_assignment
+    EntitySearchModel: render_condition()
+    OperatorSearchModel --|> UnaryOperatorSearchModel
+    OperatorSearchModel --|> NaryOperatorSearchModel
+    UnaryOperatorSearchModel: child
+    NaryOperatorSearchModel: children
+    UnaryOperatorSearchModel --|> NotSearchModel
+    NaryOperatorSearchModel --|> OrSearchModel
+    NaryOperatorSearchModel --|> AndSearchModel
+    NotSearchModel: type
+    NotSearchModel: render_condition()
+    OrSearchModel: type
+    OrSearchModel: render_condition()
+    AndSearchModel: type
+    AndSearchModel: render_condition()
+    EntitySearchModel --|> UserSearchModel
+    EntitySearchModel --|> CompanySearchModel
+    UserSearchModel: type
+    UserSearchModel: id
+    UserSearchModel: first_name
+    UserSearchModel: last_name
+    UserSearchModel: email
+    UserSearchModel: company_id
+    CompanySearchModel: type
+    CompanySearchModel: id
+    CompanySearchModel: name

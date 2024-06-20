@@ -1,0 +1,9 @@
+{
+    "summary": "Search for Company with id 1000000042.",
+    "value": {
+	"type": "Company",
+	"name": "Acme",
+	"id": 1000000042
+    }
+}
+

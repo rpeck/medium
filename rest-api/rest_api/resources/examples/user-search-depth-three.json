@@ -1,0 +1,40 @@
+{
+    "summary": "Deeply nested search operation.",
+    "description": "Searches for users who are named 'John Doe' and either are not in company 1000000042 or are named 'John Doe'. Yeah, that's a bit nonsensical. :-) This search operation demonstrates deep nested logic with 'And', 'Or' and 'Not'. It starts with an 'And' search for a user named 'John Doe' and a complex expression. The expression is another 'And' that combines an 'Or' search for 'John Doe' or anyone from company 1000000042, and a 'Not' search that excludes anyone from company 1000000042.",
+    "value": {
+        "type": "And",
+        "children": [
+            {
+                "type": "User",
+                "first_name": "John",
+                "last_name": "Doe"
+            },
+            {
+                "type": "And",
+                "children": [
+                    {
+                        "type": "Or",
+                        "children": [
+                            {
+                                "type": "User",
+                                "first_name": "John",
+                                "last_name": "Doe"
+                            },
+                            {
+                                "type": "User",
+                                "company_id": 1000000042
+                            }
+                        ]
+                    },
+                    {
+                        "type": "Not",
+                        "child": {
+                            "type": "User",
+                            "company_id": 1000000042
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+}

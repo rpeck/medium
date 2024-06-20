@@ -1,0 +1,8 @@
+{
+    "summary": "Invalid user search, with dict for first_name",
+    "description": "This example demonstrates an invalid user search operation where the first_name is a dictionary instead of a string. This will result in a validation error.",
+    "value": {
+        "type": "User",
+        "first_name": { "first": "John", "last": "Do" }
+    }
+}

@@ -6,9 +6,12 @@ from random import choice
 from httpx import AsyncClient, Response
 
 from rest_api.entities.companies import CompanyCreate, CompanyRead, CompanyBase, CompanyUpdate
-from rest_api.entities.companies import test_company_1
+from rest_api.helpers.examples import ExamplePayloads
 
-from .common import EndpointTestFixtures
+from tests.common import EndpointTestFixtures
+from tests.helpers.entities_helpers import test_companies
+
+test_company_0 = test_companies[0]
 
 CompanyT = TypeVar("CompanyT", bound=CompanyBase)
 
@@ -22,30 +25,19 @@ def create_test_company(t: Type[CompanyT]) -> CompanyT:
 
 class TestCompaniesCRUD(EndpointTestFixtures):
 
-    async def test_validate_test_data(self, http_client: AsyncClient) -> None:
-        '''
-        Check that the expected test data is present in the db.
-        '''
-        response: Response = await http_client.get("/v1/companies/1")
-        assert response.status_code == 200
-
-        company_1: CompanyRead = CompanyRead(**response.json())
-        assert company_1.name == test_company_1.name
-        assert company_1.address == test_company_1.address
-
     async def test_company_crud(self, http_client: AsyncClient) -> None:
         response: Response
 
         # test Create (POST):
-        test_company_1: CompanyCreate = create_test_company(CompanyCreate)
+        test_company_0: CompanyCreate = create_test_company(CompanyCreate)
 
-        response = await http_client.post("/v1/companies", json=test_company_1.dict())
-        assert response.status_code == 200
+        response = await http_client.post("/v1/companies", json=test_company_0.dict())
+        assert response.status_code == 201
         created_company_1: CompanyRead = CompanyRead(**response.json())
 
-        assert created_company_1.id is not None and created_company_1.id > 1
-        assert created_company_1.name == test_company_1.name
-        assert created_company_1.address == test_company_1.address
+        assert created_company_1.id is not None
+        assert created_company_1.name == test_company_0.name
+        assert created_company_1.address == test_company_0.address
 
         # test Read (GET) of the Company we just created:
         response = await http_client.get(f"/v1/companies/{created_company_1.id}")
@@ -74,7 +66,7 @@ class TestCompaniesCRUD(EndpointTestFixtures):
 
         # test Update (PUT) of the Company we just created; note that this replaces ALL the fields, even if they are None:
         updates_put: CompanyUpdate = CompanyUpdate(**{
-            "name": test_company_1.name,
+            "name": test_company_0.name,
             "address": None,
         })
         response = await http_client.put(f"/v1/companies/{created_company_1.id}", json=updates_put.dict(exclude_unset=False))
@@ -89,9 +81,7 @@ class TestCompaniesCRUD(EndpointTestFixtures):
 
         # delete the new company and verify that it's deleted:
         response = await http_client.delete(f"/v1/companies/{created_company_1.id}")
-        assert response.status_code == 200
-        deleted: CompanyRead = CompanyRead(**response.json())
-        assert deleted.id == created_company_1.id
+        assert response.status_code == 204
 
         # try to read it back:
         response = await http_client.get(f"/v1/companies/{created_company_1.id}")
@@ -102,3 +92,42 @@ class TestCompaniesCRUD(EndpointTestFixtures):
         response = await http_client.delete(f"/v1/companies/{created_company_1.id}")
         assert response.status_code == 404
         assert 'Company not found:' in response.text
+
+
+class TestExamples(EndpointTestFixtures):
+
+    async def test_company_create_acme(self, http_client: AsyncClient, examples: ExamplePayloads) -> None:
+        payload = examples.get_example_value('company-create-acme')
+        create_response = await http_client.post("/v1/companies", json=payload)
+
+        assert create_response.status_code == 201
+        company = CompanyRead(**create_response.json())
+        assert company.name == payload["name"]
+        assert company.id > 0
+
+        # GET the newly created company by using id from the creation response.
+        get_response = await http_client.get(f"/v1/companies/{company.id}")
+
+        assert get_response.status_code == 200
+        create_response.json() == get_response.json()
+
+        # DELETE the created company.
+        delete_response = await http_client.delete(f"/v1/companies/{company.id}")
+        assert delete_response.status_code == 204
+
+        # Validate if the deletion is successful by trying to get the deleted company.
+        get_deleted_company_response = await http_client.get(f"/v1/companies/{company.id}")
+        assert get_deleted_company_response.status_code == 404
+
+    async def test_error_company_create_no_name(self, http_client: AsyncClient, examples: ExamplePayloads) -> None:
+        payload = examples.get_example_value('error-company-create-no-name')
+        response = await http_client.post("/v1/companies", json=payload)
+
+        assert response.status_code == 422
+        detail = response.json()["detail"]
+        assert detail[0]["type"] == "missing"
+        assert detail[0]["msg"] == "Field required"
+        assert detail[0]["loc"] == ["body", "name"]
+
+if __name__ == "__main__":
+    pytest.main()

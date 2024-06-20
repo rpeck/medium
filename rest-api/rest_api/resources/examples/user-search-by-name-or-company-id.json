@@ -1,0 +1,17 @@
+{
+    "summary": "Search for a user with last name 'Doe' or from company 1000000024",
+    "description": "This search uses 'Or' to combine two sub-searches: one for users with the last name 'Doe', and another for users part of company 1000000024. The search will return users who meet either condition.",
+    "value": {
+        "type": "Or",
+        "children": [
+            {
+                "type": "User",
+                "last_name": "Doe"
+            },
+            {
+                "type": "User",
+                "company_id": 1000000024
+            }
+        ]
+    }
+}

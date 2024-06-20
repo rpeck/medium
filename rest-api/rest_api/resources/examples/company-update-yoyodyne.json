@@ -1,0 +1,6 @@
+{
+    "summary": "A simple example of a CompanyUpdate payload.",
+    "value": {
+	"name": "Yoyodyne"
+    }
+}

@@ -1,0 +1,8 @@
+{
+    "summary": "Invalid user search with string value for company_id",
+    "description": "This example demonstrates an invalid user search operation with a company_id as a string instead of an integer. This will result in a validation error.",
+    "value": {
+        "type": "User",
+        "company_id": "ABC"
+    }
+}

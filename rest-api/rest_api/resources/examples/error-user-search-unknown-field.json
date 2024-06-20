@@ -1,0 +1,8 @@
+{
+    "summary": "Error case: unknown field",
+    "description": "This example demonstrates an invalid user search operation using an unknown field name 'name'. This will result in a validation error.",
+    "value": {
+        "type": "User",
+        "name": "John"
+    }
+}

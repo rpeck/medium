@@ -1,0 +1,11 @@
+{
+    "summary": "Search for all users except those with first name 'John'",
+    "description": "This search operation uses a 'Not' logic with a sub-search to exclude all users with the first name 'John'.",
+    "value": {
+        "type": "Not",
+        "child": {
+            "type": "User",
+            "first_name": "John"
+        }
+    }
+}

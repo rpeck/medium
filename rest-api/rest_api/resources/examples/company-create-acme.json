@@ -1,0 +1,7 @@
+{
+    "summary": "A simple example of a CompanyCreate payload.",
+    "value": {
+	"name": "Acme"
+    }
+}
+

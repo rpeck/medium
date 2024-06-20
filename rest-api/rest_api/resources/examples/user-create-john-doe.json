@@ -1,0 +1,11 @@
+{
+    "summary": "An example UserCreate object which should succeed, assuming there's no john@doe.com already.",
+    "description": "This UserCreate object has all fields set.",
+    "value": {
+        "first_name": "John",
+        "last_name": "Doe",
+	"email": "john@doe.com",
+	"company_id": 1000000042,
+	"password": "foo!"
+    }
+}

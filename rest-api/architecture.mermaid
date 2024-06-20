@@ -1,0 +1,10 @@
+graph LR;
+    A[FastAPI] -->|Serialization + \nError Checking| B[Pydantic];
+    A --> |Entity classes| G[SQLModel];
+    B -->|Exports| C[OpenAPI Schema];
+    C -->|Used By| D[Swagger Docs];
+    C -->|Used By| F[ReDoc];
+    C -->|Used By| J[Client code gen];
+    G -->|Persistence | H[SQLAlchemy];
+    G -->|Error Checking| B;
+    H -->|Communicates With| I[Database];

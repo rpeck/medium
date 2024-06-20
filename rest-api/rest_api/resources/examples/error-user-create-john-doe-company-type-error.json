@@ -1,0 +1,11 @@
+{
+    "summary": "Error case: UserCreate object with a bad company_id field.",
+    "description": "This UserCreate object specifies a string company ID, so it should fail with a 422.",
+    "value": {
+        "first_name": "John",
+        "last_name": "Doe",
+	"company_id": "garbage",
+	"email": "john@doe-bac-company-type.com",
+	"password": "foo!"
+    }
+}

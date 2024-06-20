@@ -1,0 +1,11 @@
+{
+    "summary": "Error case: UserCreate object with unknown company.",
+    "description": "This UserCreate object specifies a company ID we don't have in the db, so it should fail with a 404.",
+    "value": {
+        "first_name": "John",
+        "last_name": "Doe",
+	"company_id": 1000000,
+	"email": "john@doe-unknown-company.com",
+	"password": "foo!"
+    }
+}

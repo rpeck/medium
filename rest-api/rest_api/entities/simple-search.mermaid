@@ -1,0 +1,10 @@
+graph TD;
+    A["And"]
+    B["company_id == 42"]
+    C["Or"]
+    D["last_name == 'Smith'"]
+    E["last_name == 'Jones'"]
+    A --> B;
+    A --> C;
+    C --> D;
+    C --> E;

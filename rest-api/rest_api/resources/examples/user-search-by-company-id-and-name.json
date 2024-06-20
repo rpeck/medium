@@ -1,0 +1,18 @@
+{
+    "summary": "Search for a user with first name 'John', last name 'Doe' and from company 1000000042",
+    "description": "This search operation uses the 'And' logic to combine two sub-search expressions. Note that in this scenario, all the fields could have been included in a single 'User' search object rather than using the `And`.",
+    "value": {
+        "type": "And",
+        "children": [
+            {
+                "type": "User",
+                "first_name": "John",
+                "last_name": "Doe"
+            },
+            {
+                "type": "User",
+                "company_id": 1000000042
+            }
+        ]
+    }
+}

@@ -1,0 +1,8 @@
+{
+    "summary": "User search by name.",
+    "value": {
+        "type": "User",
+        "first_name": "John",
+        "last_name": "Doe"
+    }
+}

@@ -1,0 +1,9 @@
+{
+  "summary": "Invalid search operation",
+  "description": "This example demonstrates an invalid search operation payload. The 'type' field does not match any recognized search model, which leads to an error in the request.",
+  "value": {
+    "type": "InvalidSearchModel",
+    "foo": "bar",
+    "baz": "blat"
+  }
+}

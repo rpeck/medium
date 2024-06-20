@@ -1,0 +1,29 @@
+{
+    "summary": "User search with nested And and Or, plus Not.",
+    "description": "This searches for Users in Company 1000000042 with last name 'Smith' and first name Not 'John'.",
+    "value": {
+	"type": "And",
+	"children": [
+	    {
+		"type": "User",
+		"company_id": 1000000042
+	    },
+	    {
+		"type": "Or",
+		"children": [
+		    {
+			"type": "Not",
+			"child": {
+			    "type": "User",
+			    "first_name": "John"
+			}
+		    },
+		    {
+			"type": "User",
+			"last_name": "Smith"
+		    }
+		]
+	    }
+	]
+    }
+}

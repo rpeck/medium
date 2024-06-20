@@ -1,0 +1,7 @@
+{
+    "summary": "An example UserUpdate object which should succeed.",
+    "description": "This UserUpdate object only changes the first name.",
+    "value": {
+        "first_name": "Jane"
+    }
+}

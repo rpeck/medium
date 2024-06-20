@@ -1,0 +1,5 @@
+/README.html
+/tests/.coverage
+/tests/coverage.xml
+/.idea/**
+/rest_api/.idea/**
