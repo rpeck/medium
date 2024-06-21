@@ -1,6 +1,6 @@
 # Best Practices for Modern REST APIs in Python
 
-Over the last few months, I built a REST API in modern Python for my latest startup. This isn't my first time developing REST APIs – I've built them for two previous startups, one in Java (heavy on reflection, where I had to built a lot of the framework features you'll see below myself) and one in Python 2, before the frameworks I'll cover here were available. That experience definitely informs my approach this time around!
+Over the last few months, I built a REST API in modern Python for my latest startup. This isn't my first time developing REST APIs – I've built them for two previous startups, one in Java (heavy on reflection, where I had to build a lot of the framework features you'll see below myself) and one in Python 2, before the frameworks I'll cover here were available. That experience definitely informs my approach this time around!
 
 The Python language and the libraries we use here have undergone some fairly radical changes in recent years. As a result, a lot of existing documentation and examples are outdated or sketchy. I had to dig deep into forums, read the source code of the libraries, and do quite a bit of experimentation to figure out the best way to use them to create clear API code with maintainable client documentation. *tl;dr:* The guidance you'll find here is not well-covered elsewhere, if at all.
 
@@ -8,13 +8,13 @@ Recently I parted ways with the company, so I started writing this code for myse
 
 Of course, this meant writing a new API from scratch, without referring to the code I had just written. A big shout-out to [Workona](https://workona.com/), the best bookmarking plugin in the known Universe. The first time around, I used Workona to carefully organize all the web pages I referred to. That's been part of my workflow the last few years: I create a Workona Workspace for every subproject, and I bookmark the reference material in the workspace, organized by subtopic. I honestly don't know how I worked without it! This reference material made it so much easier to go through this process a second time.
 
-Note that I focus on **CRUD** database endpoints (**C**reate, **R**ead, **U**pdate, **D**elete), since they can be the most tricky: you need to think about both persistence and serialization, and probably want flexible search.
+Note that I focus on **CRUD** database endpoints (**C**reate, **R**ead, **U**pdate, **D**elete), since they can be the trickiest: you need to think about both persistence and serialization. In addition, when we have database-backed **CRUD** endpoints we probably want flexible search, and there's no standard way of implementing this safely.
 
 In this document I'll cover:
 
 * **FastAPI**: We're using `FastAPI`, a feature-rich framework for building APIs. It's built on top of `Starlette` (a fast, lower-level asynchronous REST API framework) and `SQLModel`. FastAPI is the creation of Sebastián Ramírez (aka Tiangolo).
 * **SQLModel**: Another Tiangolo project, `SQLModel` is an entity-class framework that combines `Pydantic` and `SQLAlchemy`. It lets us create classes with robust JSON serialization and automatic error checking (thanks to Pydantic), plus persistence capabilities (courtesy of SQLAlchemy).
-* **Documentation**: We'll document our API using `Swagger` and `ReDoc`. Both tools leverage the `OpenAPI` JSON schema, and are integrated into FastAPI. I'll share some best practices I created to keep your docs maintainable and clutter-free.
+* **Documentation**: We'll document our API using `Swagger` and `ReDoc`. Both tools leverage the `OpenAPI` JSON schema and are integrated into FastAPI. I'll share some best practices I created to keep your docs maintainable and clutter-free.
 * **Flexible Search Functionality**: We'll implement a secure, flexible search feature in the REST API, similar to Notion's flexible, expression-tree-based search.
 * **Testing**: Proper testing practices are essential. I'll cover how to ensure your API is robust and reliable, with some neat tricks for database management and sharing endpoint payload examples.
 
@@ -336,7 +336,7 @@ In `rest-api.md`, the sections are delimited by specially-formatted headers. The
 * `get_tag_docs("Users")`
 * `get_endpoint_docs("GET /v1/users/{id}")`
 
-The first and second of these return values that we'll use in the `FastAPI()` constructor call:
+We'll use the first and second of these in the FastAPI() constructor call:
 
 ```python
 rest: FastAPI = FastAPI(
